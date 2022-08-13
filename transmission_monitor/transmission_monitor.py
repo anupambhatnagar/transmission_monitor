@@ -6,7 +6,6 @@ import signal
 import shlex
 from subprocess import Popen, PIPE, STDOUT
 import tkinter as tk
-from logging.handlers import RotatingFileHandler
 
 def display(pgid, tail_process, app_name):
     def update():
@@ -41,15 +40,9 @@ def display(pgid, tail_process, app_name):
     os.killpg(pgid, signal.SIGTERM)
 
 
-def create_rotating_log(path):
-    # add a rotating handler
-    handler = RotatingFileHandler(path, maxBytes=10240, backupCount=2)
-    logger.addHandler(handler)
-
-
 def start_nettop(app_name):
     filename = "rxtx_new.log"
-    log_file = open(filename, "w", buffering=1)
+    log_file = open(filename, "w")
 
     # start nettop process
     nettop_cmd = "nettop -x -P -J bytes_in,bytes_out -d -L 0 "
